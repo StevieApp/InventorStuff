@@ -26,11 +26,36 @@ Sub DivideTrial()
                     mystring = "Sheetmetal: " & Milo.DisplayName & " " & oFlatPtn.MassProperties.Area * 100 & " Area in sq. mm " & " Count: " & i
                     oMsg = oMsg & vbLf & Left(mystring, Len(mystring))
                     Dict.Add Key:=Milo.DisplayName, Item:=oFlatPtn.MassProperties.Area * 100
+                    Dim invCustomPropertySet As PropertySet
+                    Set invCustomPropertySet = oRefDoc.PropertySets.Item("Inventor User Defined Properties")
+                    Dim dblValue As String
+                    dblValue = oFlatPtn.MassProperties.Area * 100 & " sq. mm"
+                    On Error Resume Next
+                    Dim invVolumeProperty As Property
+                    Set invVolumeProperty = invCustomPropertySet.Item("Sheet Area")
+                    If Err.Number <> 0 Then
+                        Call invCustomPropertySet.Add(dblValue, "Sheet Area")
+                    Else
+                        invVolumeProperty.Value = dblValue
+                    End If
+                    ''Set invProperty = invCustomPropertySet.Add(oFlatPtn.MassProperties.Area, "MyFlatArea")
                 Else
                     Dim mestring
                     mestring = "Part: " & Milo.DisplayName & " N/A sq. mm" & " Count: " & i
                     oMsg = oMsg & vbLf & Left(mestring, Len(mestring))
                     Dict.Add Key:=Milo.DisplayName, Item:="N/A"
+                    Dim invCustomPropertySett As PropertySet
+                    Set invCustomPropertySett = oRefDoc.PropertySets.Item("Inventor User Defined Properties")
+                    Dim dblValuee As String
+                    dblValuee = "N/A"
+                    On Error Resume Next
+                    Dim invVolumePropertyy As Property
+                    Set invVolumePropertyy = invCustomPropertySett.Item("Sheet Area")
+                    If Err.Number <> 0 Then
+                        Call invCustomPropertySett.Add(dblValuee, "Sheet Area")
+                    Else
+                        invVolumePropertyy.Value = dblValuee
+                    End If
                 End If
             End If
         ElseIf oRefDoc.DocumentType = kAssemblyDocumentObject Then
@@ -44,6 +69,18 @@ Sub DivideTrial()
     Set a = fs.CreateTextFile("C:\Users\Proteq_Automation\Videos\mojo\sagome.txt", True)
     a.WriteLine (oMsg)
     a.Close
+    Dim oBOM As BOM
+    Set oBOM = oAsmDoc.ComponentDefinition.BOM
+    oBOM.PartsOnlyViewEnabled = True
+    Dim oPartsOnlyBOMView As BOMView
+    Set oPartsOnlyBOMView = oBOM.BOMViews.Item("Parts Only")
+    ''Dim i As Long
+    ''For i = 1 To oBOMView.BOMRows.Count
+
+        ''Dim oRow As BOMRow
+        ''Set oRow = oBOMView.BOMRows.Item(i)
+    ''Next
+    ''oBOM.BOMViews.
     ''ThisDoc.Launch ("C:\Users\Proteq_Automation\Videos\mojo\sagome.txt")
 End Sub
 
@@ -61,7 +98,7 @@ Sub Further(Sembly, oMsg, i, Dict)
             Else
                 i = i + 1
                 If TypeName(Miloo.ComponentDefinition) = "SheetMetalComponentDefinition" Then
-                Dim oCompDef As SheetMetalComponentDefinition
+                    Dim oCompDef As SheetMetalComponentDefinition
                     Set oCompDef = Miloo.ComponentDefinition
                     oCompDef.Unfold
                     Dim oFlatPtn As FlatPattern
@@ -70,11 +107,35 @@ Sub Further(Sembly, oMsg, i, Dict)
                     mystringg = "Sheetmetal: " & Miloo.DisplayName & " " & oFlatPtn.MassProperties.Area * 100 & " Area in sq. mm" & " Count: " & i
                     oMsg = oMsg & vbLf & Left(mystringg, Len(mystringg))
                     Dict.Add Key:=Miloo.DisplayName, Item:=oFlatPtn.MassProperties.Area * 100
+                    Dim invCustomPropertySet As PropertySet
+                    Set invCustomPropertySet = oRefDocc.PropertySets.Item("Inventor User Defined Properties")
+                    Dim dblValue As String
+                    dblValue = oFlatPtn.MassProperties.Area * 100 & " sq. mm"
+                    On Error Resume Next
+                    Dim invVolumeProperty As Property
+                    Set invVolumeProperty = invCustomPropertySet.Item("Sheet Area")
+                    If Err.Number <> 0 Then
+                        Call invCustomPropertySet.Add(dblValue, "Sheet Area")
+                    Else
+                        invVolumeProperty.Value = dblValue
+                    End If
                 Else
                     Dim mestringg
                     mestringg = "Part: " & Miloo.DisplayName & " N/A sq. mm" & " Count: " & i
                     oMsg = oMsg & vbLf & Left(mestringg, Len(mestringg))
                     Dict.Add Key:=Miloo.DisplayName, Item:="N/A"
+                    Dim invCustomPropertySett As PropertySet
+                    Set invCustomPropertySett = oRefDocc.PropertySets.Item("Inventor User Defined Properties")
+                    Dim dblValuee As String
+                    dblValuee = "N/A"
+                    On Error Resume Next
+                    Dim invVolumePropertyy As Property
+                    Set invVolumePropertyy = invCustomPropertySet.Item("Sheet Area")
+                    If Err.Number <> 0 Then
+                        Call invCustomPropertySett.Add(dblValue, "Sheet Area")
+                    Else
+                        invVolumePropertyy.Value = dblValue
+                    End If
                 End If
             End If
         ElseIf oRefDocc.DocumentType = kAssemblyDocumentObject Then
@@ -83,3 +144,6 @@ Sub Further(Sembly, oMsg, i, Dict)
         End If
     Next
 End Sub
+
+  
+
