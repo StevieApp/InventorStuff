@@ -29,7 +29,7 @@ Sub DivideTrial()
                     Dim invCustomPropertySet As PropertySet
                     Set invCustomPropertySet = oRefDoc.PropertySets.Item("Inventor User Defined Properties")
                     Dim dblValue As String
-                    dblValue = oFlatPtn.MassProperties.Area * 100 & " sq. mm"
+                    dblValue = Round(oFlatPtn.MassProperties.Area * 100, 2) & " sq. mm"
                     On Error Resume Next
                     Dim invVolumeProperty As Property
                     Set invVolumeProperty = invCustomPropertySet.Item("Sheet Area")
@@ -110,7 +110,7 @@ Sub Further(Sembly, oMsg, i, Dict)
                     Dim invCustomPropertySet As PropertySet
                     Set invCustomPropertySet = oRefDocc.PropertySets.Item("Inventor User Defined Properties")
                     Dim dblValue As String
-                    dblValue = oFlatPtn.MassProperties.Area * 100 & " sq. mm"
+                    dblValue = Round(oFlatPtn.MassProperties.Area * 100, 2) & " sq. mm"
                     On Error Resume Next
                     Dim invVolumeProperty As Property
                     Set invVolumeProperty = invCustomPropertySet.Item("Sheet Area")
@@ -130,11 +130,11 @@ Sub Further(Sembly, oMsg, i, Dict)
                     dblValuee = "N/A"
                     On Error Resume Next
                     Dim invVolumePropertyy As Property
-                    Set invVolumePropertyy = invCustomPropertySet.Item("Sheet Area")
+                    Set invVolumePropertyy = invCustomPropertySett.Item("Sheet Area")
                     If Err.Number <> 0 Then
-                        Call invCustomPropertySett.Add(dblValue, "Sheet Area")
+                        Call invCustomPropertySett.Add(dblValuee, "Sheet Area")
                     Else
-                        invVolumePropertyy.Value = dblValue
+                        invVolumePropertyy.Value = dblValuee
                     End If
                 End If
             End If
@@ -144,6 +144,3 @@ Sub Further(Sembly, oMsg, i, Dict)
         End If
     Next
 End Sub
-
-  
-
